@@ -1,0 +1,91 @@
+package sync_lock.reentrant_lock.condition;
+
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+// TODO. ReentrantLock Condition 条件变量
+// 1. 使用Condition来关联一个锁上的多个条件，实现在多个Condition中共享一个锁
+// 2. 使用Condition可以替代对Object monitor methods方法的调用
+//    Condition中await()方法类似于Object类中的wait()方法
+//    Condition中await(long time,TimeUnit unit)方法类似于Object类中的wait(long time)方法
+//    Condition中signal()方法类似于Object类中的notify()方法
+//    Condition中signalAll()方法类似于Object类中的notifyAll()方法
+//
+// TODO. Condition 条件变量的标准设计
+// If a take is attempted on an empty buffer, then the thread will block until an item becomes available
+// if a put is attempted on a full buffer, then the thread will block until a space becomes available
+// We would like to keep waiting "put threads" and "take threads" in separate "wait-sets"
+// use the optimization of only notifying a single thread at a time when items or spaces become available in the buffer
+// This can be achieved using two Condition instances
+//
+// Condition.await():
+// 1. release lock
+// 2. park thread
+// 3. get signal
+// 4. re-acquire lock
+// 5. return
+public class ReentrantLockCondition {
+
+    int count;
+    int putIndex;
+    int takeIndex;
+    final Object[] items = new Object[10];
+    private final Lock lock = new ReentrantLock();
+    private final Condition notFull = lock.newCondition();
+    private final Condition notEmpty = lock.newCondition();
+
+    // 1. 添加时，首先需要拿到ReentrantLock
+    // 2. 如果数组已满，则.await()处于等待，并释放掉拿到的锁，然后while自旋(阻塞)
+    // 3. 当数组被通知notFull.signal()非满时，则在这个条件上等待的一个线程被唤醒，然后执行添加
+    public void putItem(String x) throws InterruptedException {
+        lock.lock();
+        try {
+            // await() 会“临时释放锁并挂起线程”，但不会退出try代码块，也不会执行finally
+            // - 把当前线程放入Condition等待队列
+            // - 自动释放lock
+            // - 当前线程阻塞挂起: 没有离开try块, 没有执行 finally, 方法还没返回
+            // - 其他线程 signal()后await()会重新竞争锁
+            while (count == items.length) {
+                notFull.await();
+            }
+
+            count++;
+            items[putIndex++] = x;
+            if (putIndex == items.length) {
+                putIndex = 0;
+            }
+            // If any threads are waiting on this condition then one is selected for waking up
+            notEmpty.signal();
+        } finally {
+            // 进入finally语句块时保证线程是有锁
+            lock.unlock();
+        }
+    }
+
+    // 1. 取值时，首先需要拿到ReentrantLock
+    // 2. 如果数组为空，则.await()处于等待，并释放掉拿到的锁，然后while自旋(阻塞)
+    // 3. 当数组被通知notEmpty.signal()非空时，则在这个条件上等待的一个线程被唤醒，然后执行添加
+    public String takeItem() throws InterruptedException {
+        lock.lock();
+        try {
+            while (count == 0) {
+                notEmpty.await();
+            }
+
+            count--;
+            String x = (String) items[takeIndex++];
+            if (takeIndex == items.length) {
+                takeIndex = 0;
+            }
+            notFull.signal();
+            return x;
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    public int getCount() {
+        return count;
+    }
+}

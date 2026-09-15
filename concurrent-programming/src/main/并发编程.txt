@@ -1,4 +1,4 @@
-TODO. 并发编程问题的本质: 资源竞争
+TODO. 并发编程本质: 资源竞争
 Race Condition: 竞争条件
 Critical Section: 临界区域，被多线程共享的区域
 1. 不同线程共享数据(对象), 并发操作问题
