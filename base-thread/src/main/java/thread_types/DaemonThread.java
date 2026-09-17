@@ -1,6 +1,8 @@
-// TODO. 默认创建的线程(包括线程池中线程)不是守护线程，需要执行到结束
+package thread_types;
+
 public class DaemonThread {
 
+    // TODO. 用户创建的线程(包括线程池中线程)默认不是守护线程
     // setDaemon(false): non daemon thread, it continues to run until the end
     // setDaemon(true): daemon thread, it terminates when user defined thread(non daemon) terminates.
     static class UserThread extends Thread {
