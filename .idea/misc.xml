@@ -11,6 +11,7 @@
         <option value="$PROJECT_DIR$/java-thread-locks/pom.xml" />
         <option value="$PROJECT_DIR$/base-thread-locks/pom.xml" />
         <option value="$PROJECT_DIR$/base-thread/pom.xml" />
+        <option value="$PROJECT_DIR$/java-thread/pom.xml" />
       </list>
     </option>
   </component>

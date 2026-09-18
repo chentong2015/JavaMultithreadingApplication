@@ -1,6 +1,6 @@
 package process;
 
-// 一个进程中包含多个线程，通过进程ID来定位
+// 在代码层面获取线程ID
 // 线程ID从1开始递增，仅在JVM内部有意义，不等于操作系统线程ID
 public class JavaThreadId {
 
