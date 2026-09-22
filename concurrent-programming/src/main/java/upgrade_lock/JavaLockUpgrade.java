@@ -1,4 +1,4 @@
-package sync_lock_upgrade;
+package upgrade_lock;
 
 import org.openjdk.jol.info.ClassLayout;
 

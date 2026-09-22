@@ -1,11 +1,12 @@
-package sync_cas.spin_park;
+package sync_park.custom;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.LockSupport;
 
-// TODO. 使用Park + CAS自旋自定义一把锁: 实现对线程加锁和并发控制
+// TODO. 使用Park + CAS自旋自定义"锁"
+// 没有真实的lock存在，在lock的时候本质上线程被挂起(阻塞)
 public class CustomParkLock {
 
     private final AtomicInteger lockStatus = new AtomicInteger(0);

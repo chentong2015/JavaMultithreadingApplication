@@ -1,8 +1,8 @@
-package sync_cas.spin_park;
+package sync_park.custom;
 
-public class ParkThread extends Thread {
+public class CustomParkThread extends Thread {
 
-    private static final CustomParkLock parkLock = new CustomParkLock();
+    private final CustomParkLock parkLock = new CustomParkLock();
 
     // 多个线程直接会受到Lock锁的约束
     @Override

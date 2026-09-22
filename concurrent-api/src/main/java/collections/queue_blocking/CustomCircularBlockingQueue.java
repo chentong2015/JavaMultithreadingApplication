@@ -9,7 +9,7 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 // TODO. 自定义循环有界阻塞队列
-public class MyCircularBlockingQueue<E> implements BlockingQueue<E> {
+public class CustomCircularBlockingQueue<E> implements BlockingQueue<E> {
 
     // 事件存储数据的(由数组实现的)双端队列
     private final ArrayDeque<E> queue;
@@ -20,7 +20,7 @@ public class MyCircularBlockingQueue<E> implements BlockingQueue<E> {
 
     private final int maxSize;
 
-    public MyCircularBlockingQueue(int queueSize) {
+    public CustomCircularBlockingQueue(int queueSize) {
         this.queue = new ArrayDeque<>(queueSize);
         this.maxSize = queueSize;
     }
@@ -47,11 +47,11 @@ public class MyCircularBlockingQueue<E> implements BlockingQueue<E> {
         return true;
     }
 
+    // TODO. poll API 可能返回null中，不保证一直阻塞
     @Override
     public E poll(long timeout, TimeUnit unit) throws InterruptedException {
         long nanos = unit.toNanos(timeout);
-        final ReentrantLock lock = this.lock;
-        lock.lockInterruptibly();
+        this.lock.lockInterruptibly();
         try {
             while (this.queue.isEmpty()) {
                 if (nanos <= 0) {
@@ -62,14 +62,14 @@ public class MyCircularBlockingQueue<E> implements BlockingQueue<E> {
             }
             return this.queue.poll();
         } finally {
-            lock.unlock();
+            this.lock.unlock();
         }
     }
 
+    // TODO. take API 始终保证满足条件再取值，可能无限阻塞
     @Override
     public E take() throws InterruptedException {
-        final ReentrantLock lock = this.lock;
-        lock.lockInterruptibly();
+        this.lock.lockInterruptibly();
         try {
             // 在获取数据时必须满足Lock上指定的条件
             while (this.queue.isEmpty()) {
@@ -77,43 +77,39 @@ public class MyCircularBlockingQueue<E> implements BlockingQueue<E> {
             }
             return this.queue.poll();
         } finally {
-            lock.unlock();
+            this.lock.unlock();
         }
     }
 
     @Override
     public boolean isEmpty() {
-        final ReentrantLock lock = this.lock;
-        lock.lock();
+        this.lock.lock();
         try {
             return this.queue.isEmpty();
         } finally {
-            lock.unlock();
+            this.lock.unlock();
         }
     }
 
     @Override
     public int size() {
-        final ReentrantLock lock = this.lock;
-        lock.lock();
+        this.lock.lock();
         try {
             return this.queue.size();
         } finally {
-            lock.unlock();
+            this.lock.unlock();
         }
     }
 
     // 判断在这个锁关联的condition条件上面是否有线程在等待(阻塞)
     public boolean isConsumerThreadBlocked() {
-        final ReentrantLock lock = this.lock;
-        lock.lock();
+        this.lock.lock();
         try {
             return lock.getWaitQueueLength(this.notEmpty) > 0;
         } finally {
-            lock.unlock();
+            this.lock.unlock();
         }
     }
-
 
     @Override
     public int drainTo(Collection<? super E> c) {

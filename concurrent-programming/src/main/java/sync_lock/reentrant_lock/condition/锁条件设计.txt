@@ -1,0 +1,11 @@
+TODO. ReentrantLock Condition 锁条件设计
+- 基于锁创建多种Condition条件, 通过条件来阻塞和通知 !!
+- 被阻塞的期间会释放锁(只能在获取锁后调用)
+- Condition.await()/.signal()等效于Object.wait()/notify() 条件通讯
+
+Condition.await():
+1. release lock
+2. park thread
+3. get signal
+4. re-acquire lock
+5. return

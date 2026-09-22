@@ -1,4 +1,4 @@
-package collections.list;
+package collections;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,5 +10,6 @@ public class JavaConcurrentList {
 
     // 创建线程安全的List
     private final List<String> listSafe1 = Collections.synchronizedList(new ArrayList<>());
+
     private final List<String> listSafe2 = Collections.synchronizedList(new LinkedList<>());
 }
