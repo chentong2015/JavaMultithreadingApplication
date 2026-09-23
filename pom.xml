@@ -12,7 +12,6 @@
         <module>java-thread-pool</module>
         <module>concurrent-api</module>
         <module>java-thread-projects</module>
-        <module>java-thread-scheduled</module>
     </modules>
 
     <properties>
