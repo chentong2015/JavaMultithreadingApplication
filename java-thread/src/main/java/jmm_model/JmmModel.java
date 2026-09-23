@@ -1,9 +1,9 @@
 package jmm_model;
 
-// TODO. Java线程的启动和调度(基于JMM模型)
-// - Java线程都是直接"映射"到OS操作系统原生线程, 调用native方法
-// - Java线程调度方式: 采用抢占式(Preemptive Scheduling), 可能会造成线程饥饿
-// - Java线程由OS来分配执行的时间: 具体调度完全JVM和OS决定, 输出顺序不可保证
+// TODO. Java Thread (Platform Thread) 基于JMM模型
+// - Thread线程都是直接"映射"到OS Thread操作系统原生线程, 调用native方法
+// - 线程调度方式: 采用抢占式(Preemptive Scheduling), 可能会造成线程饥饿
+// - 线程由OS来分配执行的时间: 具体调度完全JVM和OS决定, 输出顺序不可保证
 public class JmmModel {
 
     public static void main(String[] args) {

@@ -1,0 +1,11 @@
+每个Thread都映射到OS Thread操作系统线程，且在线程运行时会占用整个OS Thread
+Thread的并发数量受限于OS Thread操作系统线程的数量
+
+TODO. JDK 21 虚拟线程: 支持高并发线程的吞吐量
+Virtual threads are lightweight threads that dramatically reduce the effort of
+writing, maintaining, and observing high-throughput concurrent applications.
+
+虚拟线程是Thread一种实例，且同样依赖于OS Thread操作系统线程来运行
+虚拟线程是Thread在运行时不会在整个生命周期都占用OS Thread
+- 多个虚拟线程可以在同一个操作系统线程上运行其Java代码，有效地共享OS线程
+- 虚拟线程的数量可以远超操作系统线程的数量
