@@ -1,4 +1,4 @@
-package threadpool_shutdown;
+package threadpool.shutdown;
 
 import java.util.concurrent.*;
 

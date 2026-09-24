@@ -10,7 +10,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 // TODO: 线程饥饿的本质: 线程调度方式是"抢占式调度"
 // 1. 每个线程由OS来分配执行的时间，最终的调度由OS决定
 // 2. 线程的切换不由线程本身决定，也不由设置的线程优先级决定
-public class JmmThreadStarvation {
+public class ThreadStarvation {
 
     // TODO. 使用公平锁可以避免线程饥饿问题
     // 设置公平锁会耗费额外的processing去管理和确保公平，对性能影响较大，减低吞吐量

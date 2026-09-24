@@ -1,6 +1,5 @@
-package process;
 
-// 在代码层面获取PID进程ID
+// 一个应用程序启动后就是一个进程
 public class JavaProcessId {
 
     // ProcessHandle: 关于Java进程的处理接口, 获取Process进程相关信息

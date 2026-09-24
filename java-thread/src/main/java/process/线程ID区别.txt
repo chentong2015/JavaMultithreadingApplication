@@ -1,6 +1,0 @@
-Process: 应用启动后开启的进程，分配进程ID
-Thread: CPU调度的最小单位, 也叫轻量级进程LWP(Light Weight Process)
-
-PID: Process ID 进程ID
-TID: Thread ID  线程ID
-NID: Native ID  操作系统层面的线程ID(注意Ox十六进制转换十进制, 对应OS系统线程ID)

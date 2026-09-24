@@ -1,0 +1,11 @@
+Thread: 线程是Java's unit of concurrency, 映射到OS线程(CPU调度的最小单位)
+The thread is a piece of sequential code that runs concurrently with
+
+TODO. Java Thread = Platform Thread = User-mode Thread
+Thread线程对象直接"映射"到OS Thread操作系统原生线程
+- Thread线程的执行需要获取CPU，耗费CPU Time占用时间 !!
+- Thread线程在运行时会占用整个OS Thread操作线程
+- Thread并发数量受限于OS Thread操作系统线程的数量 !!
+
+- 线程调度方式: 采用抢占式(Preemptive Scheduling), 可能会造成线程饥饿
+- 线程由OS来分配执行的时间: 具体调度完全JVM和OS决定, 输出顺序不可保证

@@ -1,4 +1,4 @@
-package threadpool_core;
+package threadpool.workflow;
 
 import java.util.Random;
 import java.util.concurrent.ArrayBlockingQueue;
