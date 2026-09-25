@@ -2,17 +2,15 @@
 // 一个应用程序启动后就是一个进程
 public class JavaProcessId {
 
-    // ProcessHandle: 关于Java进程的处理接口, 获取Process进程相关信息
     public static void main(String[] args) {
+        // ProcessHandle: 关于Java进程的处理接口
         long pid = ProcessHandle.current().pid();
         System.out.println(pid);
     }
 
-    // TODO. 同个进程所创建的线程数量有限制(OS系统线程数和内存大小影响)
-    // Exception in thread "main" java.lang.OutOfMemoryError:
-    // unable to create native thread: possibly out of memory or process/resource limits reached
-    //    at java.base/java.lang.Thread.start0(Native Method)
-    //    at java.base/java.lang.Thread.start(Thread.java:802)
+    // TODO. OS系统有最大进程数量限制, 单个进程中的线程数量也受限(内存空间有限)
+    // java.lang.OutOfMemoryError: unable to create native thread
+    // possibly out of memory or process/resource limits reached
     public static void testMaxNumThreads() {
         while (true) {
             new Thread(() -> {
