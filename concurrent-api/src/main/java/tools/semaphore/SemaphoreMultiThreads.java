@@ -3,7 +3,7 @@ package tools.semaphore;
 import java.util.concurrent.Semaphore;
 
 // TODO. 通过Semaphore控制最大并发线程数量(并发线程由线程池管理)
-public class SemaphoreThreadConcurrency {
+public class SemaphoreMultiThreads {
 
     private static final int MAX_MULTI_THREADS_COUNT = 10;
 

@@ -3,7 +3,7 @@ package tools;
 import java.util.concurrent.atomic.AtomicInteger;
 
 // TODO. CAS自旋方式(不阻塞线程)实现线程交替操作
-public class ThreadOrders {
+public class ThreadSwitchOrders {
 
     private static AtomicInteger value = new AtomicInteger(0);
 
